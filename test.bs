@@ -1,0 +1,47 @@
+import test;
+
+test.add("strings", fn()
+	test.assert("hello" == "hello");
+	test.assert("hey" != "hello");
+	test.str("hello", "hello");
+	test.assert("hello " + "world" == "hello world");
+	test.assert("hello".startsWith("he"));
+	
+	test.assert("hello".endsWith("lo"));
+	test.assert("hello".contains("ll"));
+	test.assert("hello".matches("\\w+"));
+	test.str("hello".split(), "[h, e, l, l, o]");
+	test.str("hello".split().join(), "hello");
+end);
+
+test.add("arrays", fn()
+	test.assert([1, 2, 3] != [1, 2, 3]);
+	test.str([1, 2, 3], "[1, 2, 3]");
+	test.str([1, 2] + [3, 4], "[1, 2, 3, 4]");
+	test.str([1, 2, 3].map(fn(x) = x*2), "[2, 4, 6]");
+	test.str([1, 2, 3].join(), "123");
+	test.str([1, 2, 3].join(","), "1,2,3");
+end);
+
+test.add("numbers", fn()
+	test.assert(1+1 == 2);
+	test.assert(1+1 != 3);
+	test.assert(1-1 == 0);
+end);
+
+test.add("objects", fn()
+	class Test()
+		def innerc()
+			def t = this;
+			def o = new class() def access() = t.priv; end;
+			return o.access();
+		end;
+	private
+		def priv = 4;
+	end;
+	test.safe(fn() = new Test().innerc());
+end);
+
+
+test.run();
+

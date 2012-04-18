@@ -1,0 +1,32 @@
+An interpreter for TranScript.
+
+See http://www.github.com/bobappleyard/ts to find out more about TranScript.
+
+INSTALLING
+
+You should have Go installed: http://www.golang.org/install
+
+The program uses GNU Readline to handle command input. This should also be
+installed. Consult your operating system's documentation for more information on
+how to do that.
+
+As root, run this command:
+
+	go get -u github.com/bobappleyard/tsi
+
+USING
+
+Type
+
+	tsi
+
+This will give a prompt. Then begin entering TranScript statements, terminated
+with `;`.
+
+Type
+
+	exit();
+
+To leave the interpreter.
+
+	
