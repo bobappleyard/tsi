@@ -68,7 +68,10 @@ file. Override this using `-o`.
 
 ENVIRONMENT VARIABLES
 
-
+The interpreter assumes that the go installation is at /usr/local/go, and that
+the interpreter is installed there. However, if GOROOT is set then the 
+interpreter will use that. This behaviour can be overrode by setting TSROOT,
+specifying exactly where to find the TranScript installation.
 
 THE TRANSCRIPT LANGUAGE
 
