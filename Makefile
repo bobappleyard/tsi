@@ -10,6 +10,9 @@ all:
 run:
 	@ ./tsi
 
+libs:
+	@ go install github.com/bobappleyard/ts/ext
+
 test:
 	@ ./tsi test.bs
 

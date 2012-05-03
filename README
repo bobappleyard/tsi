@@ -1,8 +1,12 @@
-An interpreter for TranScript.
+TranScript
+==========
+
+This is an interpreter for the TranScript language.
 
 See http://www.github.com/bobappleyard/ts to find out more about TranScript.
 
-INSTALLING
+Install
+-------
 
 You should have Go installed: http://www.golang.org/install
 
@@ -14,7 +18,8 @@ As root, run this command:
 
 	go get -u github.com/bobappleyard/tsi
 
-USING
+Use
+---
 
 Type
 
@@ -27,6 +32,6 @@ Type
 
 	exit();
 
-To leave the interpreter.
+To leave the interpreter. You can also press Ctrl+D.
 
 	
