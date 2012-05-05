@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"flag"
 	"github.com/bobappleyard/ts"
+	"github.com/bobappleyard/readline"
 	_ "github.com/bobappleyard/ts/ext"
 )
 
@@ -14,7 +15,6 @@ var (
 	ForcePrompt = flag.Bool("p", false, "force a prompt to appear")
 	Compiling = flag.Bool("c", false, "compile rather than evaluate")
 	Outfile = flag.String("o", "", "target to compile to")
-	Strip = flag.Bool("s", false, "strip debugging info")
 	ViewVersion = flag.Bool("version", false, "print BobScript version")
 )
 
@@ -49,6 +49,10 @@ func newi(as []string) *ts.Interpreter {
 	i := ts.New()
 	args := i.Accessor("args")
 	i.Import("system").Set(args, ts.Wrap(as))
+	path := os.Getenv("HOME") + "/.tsirc"
+	if _, e := os.Stat(path); e == nil {
+		i.Load(path)
+	}
 	return i
 }
 
@@ -87,10 +91,7 @@ func main() {
 	flag.Parse()
 	as := flag.Args()
 	
-	if *Strip {
-		ts.Strip = true
-	}
-	
+	readline.LoadHistory(os.Getenv("HOME") + "/.tsihistory")
 	switch {
 	case *ViewVersion:
 		fmt.Fprintln(os.Stderr, version)
@@ -107,5 +108,6 @@ func main() {
 			i.Repl()
 		}
 	}
+	readline.SaveHistory(os.Getenv("HOME") + "/.tsihistory")
 }
 
