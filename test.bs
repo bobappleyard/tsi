@@ -33,13 +33,13 @@ test.add("objects", fn()
 	class Test()
 		def innerc()
 			def t = this;
-			def o = new class() def access() = t.priv; end;
+			def o = class() def access() = t.priv; end();
 			return o.access();
 		end;
 	private
 		def priv = 4;
 	end;
-	test.safe(fn() = new Test().innerc());
+	test.safe(fn() = Test().innerc());
 end);
 
 

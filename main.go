@@ -11,9 +11,10 @@ import (
 const version = "0.3"
 
 var (
+	ForcePrompt = flag.Bool("p", false, "force a prompt to appear")
 	Compiling = flag.Bool("c", false, "compile rather than evaluate")
 	Outfile = flag.String("o", "", "target to compile to")
-	ForcePrompt = flag.Bool("p", false, "force a prompt to appear")
+	Strip = flag.Bool("s", false, "strip debugging info")
 	ViewVersion = flag.Bool("version", false, "print BobScript version")
 )
 
@@ -85,6 +86,10 @@ func main() {
 	flag.Usage = usageMsg
 	flag.Parse()
 	as := flag.Args()
+	
+	if *Strip {
+		ts.Strip = true
+	}
 	
 	switch {
 	case *ViewVersion:

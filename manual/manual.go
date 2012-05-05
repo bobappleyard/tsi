@@ -352,7 +352,7 @@ people call "closures," others call "lexical scope."
 
 OBJECTS
 
-Objects are collections of *slots*. There are three kinds of slot:
+Objects are collections of slots. There are three kinds of slot:
 
 * Fields -- These provide storage on the object.
 
@@ -443,21 +443,25 @@ will still be the object the method was on, no matter what happened in between.
 
 e.g.
 
-	def f = 1.toString();
+	def f = 1.toString;
 	print(f());
 
 Prints `1`.
 
-This is contrasted with Javascript, the behaviour of which is often confusing to
-newcomers in this regard.
-
 PROPERTIES
 
-Properties are pairs of methods, a *getter* and a *setter*. The property is
+Properties are pairs of methods, a getter and a setter. The property is
 accessed like a field. When the property is read from, the getter is called with 
 zero parameters. Its return value is taken to be the value of the property. When
-the property is written to, the setter is called with one parameter. This
-parameter represents the right hand side of the assignment.
+the property is written to, the setter is called with one parameter, the value
+being assigned to that property.
+
+To define a property, use `get` and `set` in a definition:
+
+	def <name> get() <body> set(<val>) <body>;
+
+Note that only one of `get` and `set` need to be present. If `set` is absent,
+the property is read-only. If `get` is absent, the property is write-only.
 
 THE TRANSCRIPT LIBRARY
 
@@ -565,9 +569,11 @@ is an empty string, each substring represents a character from the string.
 Otherwise the parameter is a delimiter, and each substring is made of
 contiguous regions of the string that are not the delimiter.
   
-e.g. a simple way of parsing a csv file
+e.g. 
 
-	text.split("\n").map(fn(x) = x.split(","))
+	text.split("\n").map(fn(x) = x.split(",")).zip()
+
+Parses a csv file.
 
 	subst(args*)	
 
