@@ -14,9 +14,10 @@ The program uses GNU Readline to handle command input. This should also be
 installed. Consult your operating system's documentation for more information on
 how to do that.
 
-As root, run this command:
+As root, run the following:
 
 	go get -u github.com/bobappleyard/tsi
+	go install github.com/bobappleyard/tsi
 
 Use
 ---
