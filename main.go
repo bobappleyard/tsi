@@ -4,6 +4,7 @@ import (
 	"os"
 	"fmt"
 	"flag"
+	"strings"
 	"github.com/bobappleyard/ts"
 	"github.com/bobappleyard/readline"
 	_ "github.com/bobappleyard/ts/ext"
@@ -53,6 +54,23 @@ func newi(as []string) *ts.Interpreter {
 	if _, e := os.Stat(path); e == nil {
 		i.Load(path)
 	}
+	readline.LoadHistory(os.Getenv("HOME") + "/.tsihistory")
+	readline.SetWordBreaks(" \t\n\"\\+-*/><=!:;|&[{()}].")
+	readline.Completer = func(query, ctx string) []string {
+		var src, res []string
+		p := len(ctx)-len(query)-1
+		if p > 0 && ctx[p] == '.' {
+			src = i.ListAccessors()
+		} else {
+			src = i.ListDefined()
+		}
+		for _, x := range src {
+			if strings.HasPrefix(x, query) {
+				res = append(res, x)
+			}
+		}
+		return res
+	}
 	return i
 }
 
@@ -91,7 +109,6 @@ func main() {
 	flag.Parse()
 	as := flag.Args()
 	
-	readline.LoadHistory(os.Getenv("HOME") + "/.tsihistory")
 	switch {
 	case *ViewVersion:
 		fmt.Fprintln(os.Stderr, version)
@@ -100,12 +117,12 @@ func main() {
 		compile(as)
 	case len(as) == 0:
 		i := newi(as)
-		i.Repl()
+		i.Repl(readline.Reader, readline.AddHistory)
 	default:
 		i := newi(as)
 		i.Load(as[0])
 		if *ForcePrompt {
-			i.Repl()
+			i.Repl(readline.Reader, readline.AddHistory)
 		}
 	}
 	readline.SaveHistory(os.Getenv("HOME") + "/.tsihistory")
