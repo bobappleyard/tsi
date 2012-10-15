@@ -114,6 +114,8 @@ func main() {
 		fmt.Fprintln(os.Stderr, version)
 		os.Exit(2)
 	case *Compiling:
+		i := new(ts.Interpreter)
+		i.LoadPrimitives()
 		compile(as)
 	case len(as) == 0:
 		i := newi(as)
