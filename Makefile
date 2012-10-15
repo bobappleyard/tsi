@@ -8,7 +8,7 @@ all:
 	@ go build
 
 run:
-	@ ./tsi
+	@ ./tsi ${ARGS}
 
 libs:
 	@ go install github.com/bobappleyard/ts/ext
