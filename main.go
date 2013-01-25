@@ -119,12 +119,12 @@ func main() {
 		compile(as)
 	case len(as) == 0:
 		i := newi(as)
-		i.Repl(readline.Reader, readline.AddHistory)
+		i.Repl(readline.NewReader, readline.AddHistory)
 	default:
 		i := newi(as)
 		i.Load(as[0])
 		if *ForcePrompt {
-			i.Repl(readline.Reader, readline.AddHistory)
+			i.Repl(readline.NewReader, readline.AddHistory)
 		}
 	}
 	readline.SaveHistory(os.Getenv("HOME") + "/.tsihistory")
